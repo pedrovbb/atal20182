@@ -18,7 +18,8 @@ def retorna_matriculas_decrescente(alist):
 # Assuma que existe uma quantidade infinita de cada tipo de moeda
 def retorna_minimo_moedas(valor, tipos_moedas):
 	print valor, tipos_moedas
-	resultado = retorna_minimo_moedas_FB(tipos_moedas, valor)
+#	resultado = retorna_minimo_moedas_FB(tipos_moedas, valor)
+	resultado = retorna_minimo_moedas_Guloso(tipos_moedas, valor)
 	if resultado == sys.maxint:
 		return -1
 	else:
@@ -37,4 +38,18 @@ def retorna_minimo_moedas_FB(tipos_moedas, valor):
 		
 	return resultado	 
 
+def retorna_minimo_moedas_Guloso(tipos_moedas, valor):
+	if valor == 0:
+		return 0
+	
+	resultado = 0
+	tamanho_lista = len(tipos_moedas)
 
+	for i in range(tamanho_lista):
+		num_moedas = valor // tipos_moedas[tamanho_lista-1-i]# varre a lista ao contrario, pegando os maiores valores primeiro
+		if num_moedas > 0:
+			valor = valor - (num_moedas * tipos_moedas[tamanho_lista-1-i])
+			resultado += num_moedas
+
+	if resultado == 0: return -1
+	else: return resultado
